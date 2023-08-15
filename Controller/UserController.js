@@ -144,10 +144,11 @@ exports.pssreset = async (req, res) => {
         // Check if old password matches
         // (You need to implement this step, comparing oldpass with record.password)
         // Update the user's password
-        const passowrd = record.password = npass; // Update the password field with the new password
-        console.log("passowrd", passowrd)
-        await record.save(); // Save the updated user record
+        const password = record.password = npass; // Update the password field with the new password
+        console.log("password", password)
+      const result=  await record.save(); // Save the updated user record
         res.json({
+            data:result,
             status: helper.code200,
             msg: helper.messagepassword
         });
