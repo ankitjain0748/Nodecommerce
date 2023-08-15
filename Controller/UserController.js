@@ -146,9 +146,9 @@ exports.pssreset = async (req, res) => {
         // Update the user's password
         const password = record.password = npass; // Update the password field with the new password
         console.log("password", password)
-      const result=  await record.save(); // Save the updated user record
+        const result = await record.save(); // Save the updated user record
         res.json({
-            data:result,
+            data: result,
             status: helper.code200,
             msg: helper.messagepassword
         });
