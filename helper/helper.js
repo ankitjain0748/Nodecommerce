@@ -8,6 +8,7 @@ const clientmanagemt={
     message1:"That user already exisits!!",
     message201:'created',
     message200:'suucess',
+    messagepassword:"Password updated successfully",
     measage400:'bad request',
     measage500:'Internal Server Error',
     message:"succesfully Update"

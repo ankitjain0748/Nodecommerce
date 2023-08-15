@@ -4,10 +4,11 @@ const UserSchema = mongoose.Schema({
     username:String,
     name:String,
     number:String,
-    Password:String,
+    password:String,
     confirm_password:String,
     email:String,
-    userId:Number,
+    npass:String,
+    userId:String,
     Status:{type:String,default:'disable'}
 })
 
