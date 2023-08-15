@@ -4,6 +4,8 @@ const bcrypt = require("bcrypt")
 var jwt = require('jsonwebtoken');
 require('dotenv').config()
 
+const nodemailer = require('nodemailer');
+const { consumers } = require('nodemailer/lib/xoauth2');
 
 
 //singup 
@@ -85,7 +87,7 @@ exports.Login = (async (req, res) => {
         }
         console.log("process.env.JWT_SECRET", process.env.JWT_SECRET)
         const token = jwt.sign({ user }, process.env.JWT_SECRET, {
-            expiresIn: "5h",
+            expiresIn: "56h",
         });
         console.log("token,token", token)
         res.json({
@@ -161,3 +163,74 @@ exports.pssreset = async (req, res) => {
         );
     }
 };
+
+
+
+exports.forget = async (req, res) => {
+    const { username } = req.body;
+    console.log("username", username)
+    try {
+        const record = await users.findOne({ username: username });
+        console.log("record", record)
+
+        if (record && record.email) {
+            const customerEmail = record.email;
+
+            // Create a transporter object using the SMTP transport
+            let transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 587,
+                secure: false,
+                auth: {
+                    user: 'aj1188352@gmail.com',
+                    pass: 'xobypqgazurobgps',
+                },
+            });
+
+            // Send the password reset email
+            await transporter.sendMail({
+                from: 'aj1188352@gmail.com',
+                to: customerEmail,
+                subject: "Password Reset Link",
+                html: `<a href="http://localhost:8000/forgetlink/${username}">Click this link to reset your password</a>`,
+            });
+
+            res.json({ message: 'Password reset link sent successfully.' });
+        } else {
+            res.json({
+                status:404,
+                error: 'User not found.' });
+        }
+    } catch (error) {
+        console.error('Error sending email:', error);
+        res.status(500).json({ error: 'An error occurred while sending the email.' });
+    }
+};
+
+
+exports.forgetlink = (async (req, res) => {
+    try {
+        console.log(req.body);
+        console.log("req", req.params.username);
+        const { username } = req.params; // Corrected parameter name
+        console.log("username", username);
+        const record = await users.findOne({ username: username }); // Use the correct username
+        console.log("record, record", record);
+        const { npass } = req.body
+        console.log("npass", npass)
+        const records = await users.findByIdAndUpdate(record.id, { password: npass })
+        console.log("records", records)
+        res.json({
+            data: records,
+            msg: helper.message200,
+            status: helper.code200
+        })
+    } catch (error) {
+        console.log("error", error)
+        res.json({
+            error: error,
+            msg: helper.measage400,
+            status: helper.code500
+        })
+    }
+})

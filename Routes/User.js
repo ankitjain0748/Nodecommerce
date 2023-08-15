@@ -13,6 +13,9 @@ router.get('/list', verifyUserToken, SignUpcontroller.userlist)
 
 router.post('/passreset', verifyUserToken, SignUpcontroller.pssreset)
 
+router.post('/forget',SignUpcontroller.forget)
+
+router.post('/forgetlink/:username',SignUpcontroller.forgetlink)
 
 
 module.exports = router;
