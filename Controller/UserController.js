@@ -81,7 +81,7 @@ exports.Login = (async (req, res) => {
         //    console.log(user, isPassword)
         if (!user || !isPassword) {
             res.json({
-                status: helper.code400,
+                status: helper.code200,
                 msg: helper.message11,
             });
         }
@@ -172,10 +172,8 @@ exports.forget = async (req, res) => {
     try {
         const record = await users.findOne({ username: username });
         console.log("record", record)
-
         if (record && record.email) {
             const customerEmail = record.email;
-
             // Create a transporter object using the SMTP transport
             let transporter = nodemailer.createTransport({
                 host: "smtp.gmail.com",
@@ -186,7 +184,6 @@ exports.forget = async (req, res) => {
                     pass: 'xobypqgazurobgps',
                 },
             });
-
             // Send the password reset email
             await transporter.sendMail({
                 from: 'aj1188352@gmail.com',
@@ -194,7 +191,6 @@ exports.forget = async (req, res) => {
                 subject: "Password Reset Link",
                 html: `<a href="http://localhost:8000/forgetlink/${username}">Click this link to reset your password</a>`,
             });
-
             res.json({ message: 'Password reset link sent successfully.' });
         } else {
             res.json({
