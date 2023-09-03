@@ -9,7 +9,8 @@ const UserSchema = mongoose.Schema({
     email: String,
     npass: String,
     userId: String,
-    Status: { type: String, default: 'disable' }
+    status:String,
+    role: { type: String, default: "0" }
 })
 
 const UserModel = mongoose.model("users", UserSchema)
