@@ -1,11 +1,15 @@
-const express=require("express")
-const app=express()
-const mongoose =require("mongoose")
+const express = require('express')
+const app = express()
+app.use(express.json())
+const apiroute =require("./Routes/ContactUs")
 
-mongoose.connect()
+app.use("/api",apiroute);
+app.get("/",(req,res)=>{
+    console.log("heelo world !!")
+})
+const mongoose = require('mongoose')
+mongoose.connect("mongodb://localhost:27017/contact")
 
-
-
-
-
-app.listen(8000,()=>{console.log("server is run,8000")})
+app.listen(5000,()=>{
+    console.log("Server is running on port 5000")
+})
