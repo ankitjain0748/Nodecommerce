@@ -1,14 +1,10 @@
 {
     "version": 2,
+    "name": "ndoe commerce ",
+    "builds": [
+       { "src": "./app.js", "use": "@vercel/node" }
+    ],
     "routes": [
-      {
-        "src": "/api/(.*)",
-        "dest": "/app.js"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/app.js"
-      }
+       { "src": "/(.*)", "dest": "/" }
     ]
-  }
-  
+ }
