@@ -3,7 +3,7 @@
     "routes": [
       {
         "src": "/api/(.*)",
-        "dest": "/Routes/ContactUs/app.js"
+        "dest": "/app.js"
       },
       {
         "src": "/(.*)",
