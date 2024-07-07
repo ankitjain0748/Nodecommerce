@@ -3,10 +3,6 @@
     "routes": [
       { "handle": "filesystem" },
       {
-        "src": "/api/(.*)",
-        "dest": "/Routes/ContactUs/index.js"
-      },
-      {
         "src": "/(.*)",
         "dest": "/app.js"
       }
