@@ -13,7 +13,7 @@ exports.contact = async (req, res) => {
         });
 
         const result = await data.save();
-
+console.log("result",result)
         if (result) {
             res.json({
                 status: 200,
