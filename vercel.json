@@ -1,12 +1,13 @@
 {
     "version": 2,
     "routes": [
+      { "handle": "filesystem" },
       {
-        "src": "/(.*)",
-        "dest": "/app.js"
+        "src": "/api/(.*)",
+        "dest": "/Routes/ContactUs/index.js"
       },
       {
-        "src": ".*",
+        "src": "/(.*)",
         "dest": "/app.js"
       }
     ]

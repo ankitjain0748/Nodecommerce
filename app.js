@@ -1,18 +1,32 @@
-const express = require('express')
-const app = express()
-app.use(express.json())
-const apiroute = require("./Routes/ContactUs")
+const express = require('express');
+const mongoose = require('mongoose');
+const apiroute = require('./Routes/ContactUs');
 
-app.use("/api", apiroute);
+const app = express();
+app.use(express.json());
 
-
-app.get('/', (req, res) => {
-    res.json({ message: 'API data response' });
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/contact', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => {
+  console.log('MongoDB connected');
+})
+.catch((err) => {
+  console.error('Error connecting to MongoDB:', err);
 });
 
-const mongoose = require('mongoose')
-mongoose.connect("mongodb://localhost:27017/contact")
+// API Routes
+app.use('/api', apiroute);
 
-app.listen(5000, () => {
-    console.log("Server is running on port 5000")
-})
+// Example GET route
+app.get('/', (req, res) => {
+  res.json({ message: 'API data response' });
+});
+
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
